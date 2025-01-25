@@ -6,7 +6,7 @@
 from InquirerPy.separator import Separator
 from InquirerPy import inquirer as inq
 from tabulate import tabulate
-import pickle, os
+import pickle, sys, os
 
 clear = lambda: os.system("cls" if os.name == "nt" else "clear")
 
@@ -24,10 +24,10 @@ class Rota:
 
     def populate(self):
         self.rota = [
-            {"name": "John Doe", "lastWorked": "2021-10-01"},
-            {"name": "Jane Doe", "lastWorked": "2021-10-02"},
-            {"name": "John Smith", "lastWorked": "2021-10-03"},
-            {"name": "Jane Smith", "lastWorked": "2021-10-04"},
+            {"name": "John Doe", "lastWorked": "25-01-2025"},
+            {"name": "Jane Doe", "lastWorked": "25-01-2025"},
+            {"name": "John Smith", "lastWorked": "25-01-2025"},
+            {"name": "Jane Smith", "lastWorked": "25-01-2025"},
         ]
 
     def addWorker(self, name, lastWorked):
@@ -249,7 +249,23 @@ class Menu:
 
 if __name__ == "__main__":
     try:
-        Menu()
+        if sys.argv[1] == "--populate":
+            confirmation = inq.confirm(
+                "WARNING: This will overwrite the current Rota, are you sure?",
+                qmark="⚠️",
+                amark="✅",
+            ).execute()
+            if confirmation:
+                rota = Rota()
+                rota.populate()
+                rota.save()
+                print("Populated Successfully.")
+        else:
+            Menu()
+    except IndexError:
+        try:
+            Menu()
+        except KeyboardInterrupt:
+            clear()
     except KeyboardInterrupt:
         clear()
-        exit()
