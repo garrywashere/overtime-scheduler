@@ -1,4 +1,8 @@
 **/__pycache__
+**/error.log
 **/.DS_Store
+**/*.spec
+**/build
 **/*.bin
 **/.venv
+**/dist

@@ -1,0 +1,3 @@
+-   [ ] Add ability to cancel for menus such as `Menu.editLastWorked`.
+-   [ ] Write code for `Menu.addWorker` function.
+-   [ ] Write code for `Menu.removeWorker` function.
