@@ -9,13 +9,17 @@
         <title>Overtime Scheduler</title>
         {% endif %}
         <link
+            rel="icon"
+            href="{{ url_for('static', filename='images/favicon.svg') }}"
+        />
+        <link
             rel="stylesheet"
-            href="{{ url_for('static', filename='styles.css') }}"
+            href="{{ url_for('static', filename='style.css') }}"
         />
     </head>
     <body>
         <header>
-            <h1>Welcome User,</h1>
+            <h1>Overtime Scheduler</h1>
         </header>
         <main>{% block main %}{% endblock %}</main>
         <footer>

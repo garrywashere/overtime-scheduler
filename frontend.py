@@ -22,7 +22,7 @@ def index():
 @app.route("/addWorker", methods=["GET", "POST"])  # GET the form, POST the worker name
 def addWorker():
     if request.method == "GET":  # Render addWorker.html
-        return render_template("addWorker.html")
+        return render_template("addWorker.html", title="Adding Worker...")
     elif (
         request.method == "POST"
     ):  # Recieve worker name from form, add worker to rota, commit changes
@@ -51,7 +51,7 @@ def editWorker():
             workers, _ = rota.get()
 
             if workerName in workers:
-                return render_template("editWorker.html", workerName=workerName)
+                return render_template("editWorker.html", title="Editing Worker...", workerName=workerName)
             else:
                 return "Worker not found", 404
         except KeyError:
@@ -80,7 +80,7 @@ def deleteWorker():
             workers, _ = rota.get()
 
             if workerName in workers:
-                return render_template("deleteWorker.html", workerName=workerName)
+                return render_template("deleteWorker.html", title="Deleting Worker...", workerName=workerName)
             else:
                 return "Worker not found", 404
         except KeyError:
