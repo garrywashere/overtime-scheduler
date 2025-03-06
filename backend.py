@@ -18,15 +18,26 @@ class Rota:
                 self.json.dump(self.data, file, indent=4)
 
     def addWorker(self, workerName):  # Add a worker to the list
-        self.data["workers"].append(workerName)
+        if workerName in self.data["workers"]:
+            raise FileExistsError
+        else:
+            self.data["workers"].append(workerName)
 
     def editWorker(self, workerName, newWorkerName):  # Edit a worker in the list
-        self.data["workers"][self.data["workers"].index(workerName)] = newWorkerName
+        try:
+            self.data["workers"][self.data["workers"].index(workerName)] = newWorkerName
+        except ValueError:
+            raise FileNotFoundError
 
     def deleteWorker(self, workerName):  # Delete a worker from the list
-        self.data["workers"].remove(workerName)
+        try:
+            self.data["workers"].remove(workerName)
+        except ValueError:
+            raise FileNotFoundError
 
-    def rotate(self, dateOfRotation):  # Rotate the list of workers
+    def rotate(self, dateOfRotation ):  # Rotate the list of workers
+        if dateOfRotation == None:
+            raise ValueError
         first = self.data["workers"][0]
         self.data["workers"].pop(0)
         self.data["workers"].append(first)

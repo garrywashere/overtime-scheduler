@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block main %}
+<p>Deleting: {{ workerName }}. Are you sure?</p>
+<form action="/deleteWorker?workerName={{ workerName }}" method="post">
+    <input type="hidden" name="workerName" value="{{ workerName }}" />
+    <input type="submit" value="Delete" />
+    <input type="button" value="Cancel" onclick="window.location.href='/'" />
+</form>
+{% endblock %}

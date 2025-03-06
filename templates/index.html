@@ -5,8 +5,13 @@
     {% endfor %}
 </ol>
 <p>Last Rotation: {{ lastRotated }}</p>
+<form action="/rotate" method="post">
+    <input type="date" name="dateOfRotation" required />
+    <input type="submit" value="Rotate" />
+</form>
 {% else %}
 <p>Rota empty</p>
 {% endif %}
 <a href="{{ url_for('addWorker') }}">Add Worker</a>
+
 {% endblock %}

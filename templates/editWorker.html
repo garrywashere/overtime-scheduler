@@ -11,6 +11,12 @@
         autofocus
     />
     <button type="submit">Save</button>
+    <button
+        type="button"
+        onclick="window.location.href='/deleteWorker?workerName={{ workerName }}';"
+    >
+        Delete
+    </button>
     <button type="button" onclick="window.location.href='/';">Cancel</button>
 </form>
 {% endblock %}
