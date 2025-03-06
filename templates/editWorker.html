@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block main %}
+<p>Editing Worker: {{ workerName }}</p>
+<form action="/editWorker?workerName={{ workerName }}" method="post">
+    <label for="newWorkerName">New Worker Name:</label>
+    <input
+        type="text"
+        id="newWorkerName"
+        name="newWorkerName"
+        placeholder="John Doe"
+        required
+        autofocus
+    />
+    <button type="submit">Save</button>
+    <button type="button" onclick="window.location.href='/';">Cancel</button>
+</form>
+{% endblock %}

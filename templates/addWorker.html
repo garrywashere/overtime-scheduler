@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block main %}
+<form action="/addWorker" method="post">
+    <label for="workerName">Worker Name:</label>
+    <input
+        type="text"
+        id="workerName"
+        name="workerName"
+        placeholder="John Doe"
+        required
+        autofocus
+    />
+    <button type="submit">Add Worker</button>
+    <button type="button" onclick="window.location.href='/';">Cancel</button>
+</form>
+{% endblock %}

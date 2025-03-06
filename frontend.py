@@ -10,7 +10,9 @@ app = Flask(__name__)
 
 @app.route("/")  # Show the rota
 def index():
-    render_template("index.html")
+    rota = Rota("rota.json")
+    workers, lastRotated = rota.get()
+    return render_template("index.html", workers=workers, lastRotated=lastRotated)
 
 
 @app.route("/addWorker", methods=["GET", "POST"])  # GET the form, POST the worker name
@@ -21,7 +23,7 @@ def addWorker():
         request.method == "POST"
     ):  # Recieve worker name from form, add worker to rota, commit changes
         rota = Rota("rota.json")
-        rota.addWorker(request.form["workerName"])
+        rota.addWorker(request.form["workerName"]) # CATCH A KEY ERROR HERE
         rota.commit()
         return redirect("/")
     else:
@@ -29,7 +31,7 @@ def addWorker():
 
 
 @app.route(
-    "/editWorker/<workerName>", methods=["GET", "POST"]
+    "/editWorker", methods=["GET", "POST"]
 )  # GET the worker info, POST the new info
 def editWorker():
     if (
@@ -50,7 +52,10 @@ def editWorker():
     elif (
         request.method == "POST"
     ):  # Recieve new worker info from form, edit worker info, commit changes
-        pass
+        rota = Rota("rota.json")
+        rota.editWorker(request.args.get("workerName"), request.form["newWorkerName"])
+        rota.commit()
+        return redirect("/")
     else:
         return "Method not allowed", 405
 
@@ -65,3 +70,6 @@ def deleteWorker():
 @app.route("/rotate", methods=["POST"])  # POST the date of rotation
 def rotate():
     pass
+
+if __name__ == "__main__":
+    app.run(debug=True, port=8080)

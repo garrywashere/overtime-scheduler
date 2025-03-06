@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block main %} {% if workers %}
+<ol>
+    {% for worker in workers %}
+    <li><a href="/editWorker?workerName={{ worker }}">{{ worker }}</a></li>
+    {% endfor %}
+</ol>
+<p>Last Rotation: {{ lastRotated }}</p>
+{% else %}
+<p>Rota empty</p>
+{% endif %}
+<a href="{{ url_for('addWorker') }}">Add Worker</a>
+{% endblock %}

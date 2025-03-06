@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% if title %}
+        <title>{{ title }} | Overtime Scheduler</title>
+        {% else %}
+        <title>Overtime Scheduler</title>
+        {% endif %}
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>Welcome User,</h1>
+        </header>
+        <main>{% block main %}{% endblock %}</main>
+        <footer>
+            <p>&copy; 2025 garrynet.co.uk</p>
+        </footer>
+    </body>
+</html>
