@@ -1,3 +1,7 @@
+# Author: Garry Ivanovs
+# Created: 06-03-2025
+# Modified 06-03-2025
+
 import subprocess
 
 if __name__ == "__main__":

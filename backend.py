@@ -2,7 +2,6 @@
 # Created: 06-03-2025
 # Modified 06-03-2025
 
-
 class Rota:
     def __init__(self, filename):  # Load the data from the file
         import json as _json
