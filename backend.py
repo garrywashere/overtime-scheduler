@@ -1,5 +1,10 @@
+# Author: Garry Ivanovs
+# Created: 06-03-2025
+# Modified 06-03-2025
+
+
 class Rota:
-    def __init__(self, filename):
+    def __init__(self, filename):  # Load the data from the file
         import json as _json
 
         self.json = _json
@@ -12,25 +17,25 @@ class Rota:
                 self.data = {"workers": [], "lastRotated": None}
                 self.json.dump(self.data, file, indent=4)
 
-    def addWorker(self, workerName):
+    def addWorker(self, workerName):  # Add a worker to the list
         self.data["workers"].append(workerName)
 
-    def editWorker(self, workerName, newWorkerName):
+    def editWorker(self, workerName, newWorkerName):  # Edit a worker in the list
         self.data["workers"][self.data["workers"].index(workerName)] = newWorkerName
 
-    def deleteWorker(self, workerName):
+    def deleteWorker(self, workerName):  # Delete a worker from the list
         self.data["workers"].remove(workerName)
 
-    def rotate(self, dateOfRotation):
+    def rotate(self, dateOfRotation):  # Rotate the list of workers
         first = self.data["workers"][0]
         self.data["workers"].pop(0)
         self.data["workers"].append(first)
 
         self.data["lastRotated"] = dateOfRotation
 
-    def get(self):
+    def get(self):  # Get the list of workers and the date of the last rotation
         return self.data["workers"], self.data["lastRotated"]
 
-    def commit(self):
+    def commit(self):  # Commit the changes to the file
         with open("rota.json", "w") as file:
             self.json.dump(self.data, file, indent=4)
