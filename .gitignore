@@ -4,5 +4,6 @@
 **/*.spec
 **/build
 **/*.bin
+**/.json
 **/.venv
 **/dist
