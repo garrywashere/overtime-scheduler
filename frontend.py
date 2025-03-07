@@ -10,6 +10,11 @@ app = Flask(__name__)
 FILENAME = "rota.json"
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return "Page not found", 404
+
+
 @app.route("/")  # Show the rota
 def index():
     if request.method == "GET":
