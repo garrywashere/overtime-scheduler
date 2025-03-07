@@ -1,6 +1,6 @@
 <!-- Author: Garry Ivanovs
 Created: 06-03-2025
-Modified 06-03-2025 -->
+Modified 07-03-2025 -->
 
 {% extends "base.html" %} {% block main %}
 <p>Editing Worker: {{ workerName }}</p>
@@ -10,10 +10,21 @@ Modified 06-03-2025 -->
         type="text"
         id="newWorkerName"
         name="newWorkerName"
-        placeholder="John Doe"
+        placeholder="{{ workerName }}"
         required
         autofocus
+        value="{{ workerName }}"
     />
+    <br />
+    <label for="newLastRotated">Last Worked:</label>
+    <input
+        type="date"
+        id="newLastRotated"
+        name="newLastRotated"
+        required
+        value="{{ lastRotated }}"
+    />
+    <br /><br />
     <button type="submit">Save</button>
     <button
         type="button"

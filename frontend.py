@@ -1,6 +1,6 @@
 # Author: Garry Ivanovs
 # Created: 06-03-2025
-# Modified: 06-03-2025
+# Modified: 07-03-2025
 
 from backend import Rota
 from flask import Flask, render_template, request, redirect
@@ -9,11 +9,13 @@ app = Flask(__name__)
 
 FILENAME = "rota.json"
 
+
 @app.route("/")  # Show the rota
 def index():
     if request.method == "GET":
         rota = Rota(FILENAME)
-        workers, lastRotated = rota.get()
+        workers = rota.get()["workers"]
+        lastRotated = rota.get()["lastRotated"]
         return render_template("index.html", workers=workers, lastRotated=lastRotated)
     else:
         return "Method not allowed", 405
@@ -48,22 +50,39 @@ def editWorker():
             workerName = request.args.get("workerName")
 
             rota = Rota(FILENAME)
-            workers, _ = rota.get()
+            workers = rota.get()["workers"]
 
-            if workerName in workers:
-                return render_template("editWorker.html", title="Editing Worker...", workerName=workerName)
-            else:
+            found = False
+            for worker in workers:
+                if worker["name"] == workerName:
+                    found = True
+                    return render_template(
+                        "editWorker.html",
+                        title="Editing Worker...",
+                        workerName=worker["name"],
+                        lastRotated=worker["lastRotated"],
+                    )
+            if not found:
                 return "Worker not found", 404
         except KeyError:
-            return "Worker not found", 404
+            return "Empty request", 400
     elif (
         request.method == "POST"
     ):  # Recieve new worker info from form, edit worker info, commit changes
         rota = Rota(FILENAME)
-        try:
-            rota.editWorker(request.args.get("workerName"), request.form["newWorkerName"])
-            rota.commit()
-        except FileNotFoundError:
+        workers = rota.get()["workers"]
+
+        found = False
+        for worker in workers:
+            if worker["name"] == request.args.get("workerName"):
+                rota.editWorker(
+                    worker["name"],
+                    request.form["newWorkerName"],
+                    request.form["newLastRotated"],
+                )
+                rota.commit()
+                found = True
+        if not found:
             return "Worker not found", 404
         return redirect("/")
     else:
@@ -77,14 +96,21 @@ def deleteWorker():
             workerName = request.args.get("workerName")
 
             rota = Rota(FILENAME)
-            workers, _ = rota.get()
+            workers = rota.get()["workers"]
 
-            if workerName in workers:
-                return render_template("deleteWorker.html", title="Deleting Worker...", workerName=workerName)
+            found = False
+            for worker in workers:
+                if worker["name"] == workerName:
+                    found = True
+                    return render_template(
+                        "deleteWorker.html",
+                        title="Deleting Worker...",
+                        workerName=worker["name"],
+                    )
             else:
                 return "Worker not found", 404
         except KeyError:
-            return "Worker not found", 404
+            return "Empty request", 400
     elif request.method == "POST":
         try:
             workerName = request.args.get("workerName")
@@ -97,7 +123,7 @@ def deleteWorker():
                 return "Worker not found", 404
             return redirect("/")
         except KeyError:
-            return "Worker not found", 404
+            return "Empty request", 400
     else:
         return "Method not allowed", 405
 
@@ -114,6 +140,7 @@ def rotate():
         return redirect("/")
     else:
         return "Method not allowed", 405
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

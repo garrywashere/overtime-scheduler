@@ -1,11 +1,15 @@
 <!-- Author: Garry Ivanovs
 Created: 06-03-2025
-Modified 06-03-2025 -->
+Modified 07-03-2025 -->
 
 {% extends "base.html" %} {% block main %} {% if workers %}
 <ol>
     {% for worker in workers %}
-    <li><a href="/editWorker?workerName={{ worker }}">{{ worker }}</a></li>
+    <li>
+        <a href="/editWorker?workerName={{ worker['name'] }}"
+            >{{ worker["name"] }} | {{ worker["lastRotated"] }}</a
+        >
+    </li>
     {% endfor %}
 </ol>
 <p>Last Rotation: {{ lastRotated }}</p>
