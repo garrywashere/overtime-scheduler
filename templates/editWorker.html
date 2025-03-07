@@ -3,7 +3,7 @@ Created: 06-03-2025
 Modified 07-03-2025 -->
 
 {% extends "base.html" %} {% block main %}
-<p>Editing Worker: {{ workerName }}</p>
+<h2>Editing Worker: {{ workerName }}</h2>
 <form action="/editWorker?workerName={{ workerName }}" method="post">
     <label for="newWorkerName">New Worker Name:</label>
     <input
